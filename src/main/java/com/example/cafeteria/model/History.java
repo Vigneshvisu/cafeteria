@@ -1,6 +1,8 @@
 package com.example.cafeteria.model;
 
-import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,86 +11,82 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-
+import jakarta.persistence.SequenceGenerator;
 @Entity
 public class History {
+	@Column
 	@Id
-	@Column
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,
+	generator="history_generator")
+	@SequenceGenerator(name="history_generator",
+	sequenceName="history_seq",allocationSize=1)
 	private int id;
-	@Column
-	private Timestamp orderingDate;
-	@Column
-	private String upi;
-	@Column
-	 private boolean Amountcredited;
-	@Column
-	 private boolean OrderAssigned;
-	@Column
-	 private boolean OrderDispatched;
-	@Column
-	 private boolean OrderDelivered;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id",unique=false)
-	private UserEntity userentity;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="deliveryman_id",unique=false)
-	private DeliveryMan deliveryman_id;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "deliveryman")
+	private DeliveryMan deliveryman;
+	
+	@ManyToMany (mappedBy= "history")//bi-directional, here wont give a mappedby that are denoted to u
+	private List<UserEntity> userentity;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinTable(name="address_id")
+	private Address address;
 
 
-	
-	
+	public History(int id, DeliveryMan deliveryman, UserEntity userentity, Address address, Payment payment) {
+		super();
+		this.id = id;
+		this.deliveryman = deliveryman;
+		
+		this.address = address;
+		
+	}
 
 	public History() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Timestamp getOrderingDate() {
-		return orderingDate;
+
+	public DeliveryMan getDeliveryman() {
+		return deliveryman;
 	}
-	public void setOrderingDate(Timestamp orderingDate) {
-		this.orderingDate = orderingDate;
+
+	public void setDeliveryman(DeliveryMan deliveryman) {
+		this.deliveryman = deliveryman;
 	}
-	public String getUpi() {
-		return upi;
+
+	public List<UserEntity> getUserentity() {
+		return userentity;
 	}
-	public void setUpi(String upi) {
-		this.upi = upi;
+
+	public void setUserentity(List<UserEntity> userentity) {
+		this.userentity = userentity;
 	}
-	public boolean isAmountcredited() {
-		return Amountcredited;
+
+	public Address getAddress() {
+		return address;
 	}
-	public void setAmountcredited(boolean amountcredited) {
-		Amountcredited = amountcredited;
-	}
-	public boolean isOrderAssigned() {
-		return OrderAssigned;
-	}
-	public void setOrderAssigned(boolean orderAssigned) {
-		OrderAssigned = orderAssigned;
-	}
-	public boolean isOrderDispatched() {
-		return OrderDispatched;
-	}
-	public void setOrderDispatched(boolean orderDispatched) {
-		OrderDispatched = orderDispatched;
-	}
-	public boolean isOrderDelivered() {
-		return OrderDelivered;
-	}
-	public void setOrderDelivered(boolean orderDelivered) {
-		OrderDelivered = orderDelivered;
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	
 	
+
 }

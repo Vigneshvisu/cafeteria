@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.cafeteria.Exception.AddressNotFoundException;
 import com.example.cafeteria.model.Address;
-import com.example.cafeteria.model.AddressNotFoundException;
 import com.example.cafeteria.service.AddressService;
 
 @RestController

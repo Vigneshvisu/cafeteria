@@ -1,5 +1,8 @@
 package com.example.cafeteria.model;
 
+import java.util.List;
+
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,13 +10,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class UserEntity {
 @Id
 @Column
-@GeneratedValue(strategy=GenerationType.TABLE)
+@GeneratedValue(strategy=GenerationType.SEQUENCE,
+generator="userentity_generator")
+@SequenceGenerator(name="userentity_generator",
+sequenceName="userentity_seq",allocationSize=1)
 private int id;
 @Column
 private String Username;
@@ -25,11 +36,49 @@ private String MobileNumber;
 private String MailId;
 @Column
 private String Address;
-@JoinColumn(name="address_id")
 private String food;
-@ManyToOne(cascade=CascadeType.ALL)
 
 
+@OneToOne(cascade=CascadeType.ALL)
+@JoinColumn(name="address_id")
+private Address address;
+
+@OneToMany(cascade = CascadeType.ALL)
+@JoinColumn(name = "deliveryman")
+private List<DeliveryMan> deliveryman;
+
+@OneToOne(cascade=CascadeType.ALL)
+private Payment payment;
+
+
+@ManyToMany(cascade=CascadeType.ALL)
+@JoinTable(name=" userentity_skill_relation",
+joinColumns= @JoinColumn(name="user_id"),
+inverseJoinColumns= @JoinColumn(name="history_id"))
+private List<History> history;
+
+
+@OneToOne(cascade=CascadeType.ALL)
+@JoinColumn(name="orderstatus_id")
+private OrderStatus orderstatus;
+
+
+
+public UserEntity(int id, String username, String password, String mobileNumber, String mailId, String address,
+		String food) {
+	super();
+	this.id = id;
+	Username = username;
+	Password = password;
+	MobileNumber = mobileNumber;
+	MailId = mailId;
+	Address = address;
+	this.food = food;
+}
+public UserEntity() {
+	super();
+	// TODO Auto-generated constructor stub
+}
 public String getFood() {
 	return food;
 }

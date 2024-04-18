@@ -9,63 +9,73 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Category {
-@Id
-@Column
-@GeneratedValue(strategy=GenerationType.TABLE)
-private int foodid;
-private String foodname;
-private String foodtitle;
-private boolean foodready;
+	@Id
+	@Column
 
-@OneToMany(cascade=CascadeType.ALL)
-@JoinColumn(name="userentity")
-private List<UserEntity> userentity ;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,
+	generator="category_generator")
+	@SequenceGenerator(name="category_generator",
+	sequenceName="category_seq",allocationSize=1)
+	private int foodid;
+	private String foodname;
+	private String foodtitle;
+	private boolean foodready;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "products")
+	private List<Products> products;
 
-@OneToMany(cascade=CascadeType.ALL)
-@JoinColumn(name="deliveryman")
-private List<DeliveryMan> deliveryman;
+	
+	public Category(int foodid, String foodname, String foodtitle, boolean foodready, List<UserEntity> userentity,
+			List<DeliveryMan> deliveryman) {
+		super();
+		this.foodid = foodid;
+		this.foodname = foodname;
+		this.foodtitle = foodtitle;
+		this.foodready = foodready;
+		
+	}
 
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
+	public int getFoodid() {
+		return foodid;
+	}
 
-public Category() {
-	super();
-	// TODO Auto-generated constructor stub
-}
+	public void setFoodid(int foodid) {
+		this.foodid = foodid;
+	}
 
-public int getFoodid() {
-	return foodid;
-}
+	public String getFoodname() {
+		return foodname;
+	}
 
-public void setFoodid(int foodid) {
-	this.foodid = foodid;
-}
+	public void setFoodname(String foodname) {
+		this.foodname = foodname;
+	}
 
-public String getFoodname() {
-	return foodname;
-}
+	public String getFoodtitle() {
+		return foodtitle;
+	}
 
-public void setFoodname(String foodname) {
-	this.foodname = foodname;
-}
+	public void setFoodtitle(String foodtitle) {
+		this.foodtitle = foodtitle;
+	}
 
-public String getFoodtitle() {
-	return foodtitle;
-}
+	public boolean isFoodready() {
+		return foodready;
+	}
 
-public void setFoodtitle(String foodtitle) {
-	this.foodtitle = foodtitle;
-}
-
-public boolean isFoodready() {
-	return foodready;
-}
-
-public void setFoodready(boolean foodready) {
-	this.foodready = foodready;
-}
+	public void setFoodready(boolean foodready) {
+		this.foodready = foodready;
+	}
 }

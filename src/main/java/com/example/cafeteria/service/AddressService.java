@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.cafeteria.Exception.AddressNotFoundException;
 import com.example.cafeteria.model.Address;
-import com.example.cafeteria.model.AddressNotFoundException;
 import com.example.cafeteria.repository.AddressRepository;
 
 @Service
@@ -45,9 +45,9 @@ public class AddressService {
 			{
 				adre.setPincode(address.getPincode());
 			}
-			if(address.getDeliveryman()!=null) {
-				adre.setDeliveryman(address.getDeliveryman());
-			}
+//			if(address.getDeliveryman()!=null) {
+//				adre.setDeliveryman(address.getDeliveryman());
+//			}
 			return addressrepository.save(adre);
 		}
 		else {
