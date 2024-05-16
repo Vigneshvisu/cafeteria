@@ -1,6 +1,7 @@
 package com.example.cafeteria.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
@@ -18,25 +20,62 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class OrderStatus {
 	@Id
-	@Column
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,
 	generator="orderstatus_generator")
 	@SequenceGenerator(name="orderstatus_generator",
-	sequenceName="orderstatus_seq",allocationSize=1)	private int id;
+	sequenceName="orderstatus_seq",allocationSize=1)
+	private int orderid;
 	@Column
-	private Timestamp orderingDate;
-	
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "payment")
-//	private List<Payment> payment;
+	private Date orderingDate;
 	@Column
 	 private boolean OrderAssigned;
-//	public List<Payment> getPayment() {
+	@Column
+	 private boolean OrderDispatched;
+	@Column
+	 private boolean OrderDelivered;
+	
+
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="user_id",unique=false)
+	private UserEntity userentity;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private DeliveryMan deliveryman;
+	
+//	@OneToOne(cascade=CascadeType.ALL)
+//	@JoinColumn(name = "payment")
+//	private Payment payment;
+
+	
+	public OrderStatus(int orderid, Timestamp orderingDate, boolean orderAssigned, boolean orderDispatched,
+			boolean orderDelivered, UserEntity userentity,  Payment payment) {
+		super();
+		this.orderid = orderid;
+		this.orderingDate = orderingDate;
+		OrderAssigned = orderAssigned;
+		OrderDispatched = orderDispatched;
+		OrderDelivered = orderDelivered;
+		this.userentity = userentity;
+		//this.payment = payment;
+	}
+//	public Payment getPayment() {
 //		return payment;
 //	}
-//	public void setPayment(List<Payment> payment) {
+//	public void setPayment(Payment payment) {
 //		this.payment = payment;
 //	}
+	public int getOrderid() {
+		return orderid;
+	}
+	public void setOrderid(int orderid) {
+		this.orderid = orderid;
+	}
+	public DeliveryMan getDeliveryman() {
+		return deliveryman;
+	}
+	public void setDeliveryman(DeliveryMan deliveryman) {
+		this.deliveryman = deliveryman;
+	}
 	public UserEntity getUserentity() {
 		return userentity;
 	}
@@ -44,60 +83,20 @@ public class OrderStatus {
 		this.userentity = userentity;
 	}
 	
-	public DeliveryMan getDeliveryman_id() {
-		return deliveryman_id;
-	}
-	public void setDeliveryman_id(DeliveryMan deliveryman_id) {
-		this.deliveryman_id = deliveryman_id;
-	}
-
-	@Column
-	 private boolean OrderDispatched;
-	@Column
-	 private boolean OrderDelivered;
-	
-	public OrderStatus(int id, Timestamp orderingDate, boolean orderAssigned,
-			boolean orderDispatched, boolean orderDelivered, UserEntity userentity, DeliveryMan deliveryman_id) {
-		super();
-		this.id = id;
-		this.orderingDate = orderingDate;
-//		this.payment = payment;
-		OrderAssigned = orderAssigned;
-		OrderDispatched = orderDispatched;
-		OrderDelivered = orderDelivered;
-		this.userentity = userentity;
-		this.deliveryman_id = deliveryman_id;
-	}
-
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id",unique=false)
-	private UserEntity userentity;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="deliveryman_id",unique=false)
-	private DeliveryMan deliveryman_id;
-
-
-	
-	
 
 	public OrderStatus() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Timestamp getOrderingDate() {
+	
+	
+	
+	public Date getOrderingDate() {
 		return orderingDate;
 	}
-	public void setOrderingDate(Timestamp orderingDate) {
+	public void setOrderingDate(Date orderingDate) {
 		this.orderingDate = orderingDate;
 	}
-	
 	public boolean isOrderAssigned() {
 		return OrderAssigned;
 	}

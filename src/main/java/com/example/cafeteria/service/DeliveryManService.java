@@ -12,18 +12,22 @@ import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.DeliveryMan;
 import com.example.cafeteria.repository.AddressRepository;
 import com.example.cafeteria.repository.DeliveryManRepository;
+//import com.example.cafeteria.repository.HistoryRepository;
 
 
 @Service
 public class DeliveryManService {
 	@Autowired
 	DeliveryManRepository deliverymanrepository;
+//	@Autowired
+//	HistoryRepository historyrepository;
 
 	public DeliveryMan createdeliverymanService(DeliveryMan deliveryman) {
 		DeliveryMan del=deliverymanrepository.save(deliveryman);
 		
 		return del;
 	}
+	
 
 	public DeliveryMan getDeliveryManServicebyid(int id) throws DeliveryManServiceNotFoundException {
 		Optional<DeliveryMan>deli=deliverymanrepository.findById(id);

@@ -9,13 +9,13 @@ import com.example.cafeteria.model.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-	Category save(Optional<Category> food);
-
-	Optional<Category> findById(int id);
-
-	List<Category> findAll();
-
-	void deleteById(int id);
+//	Category save(Optional<Category> food);
+//
+//	Optional<Category> findById(int id);
+//
+//	List<Category> findAll();
+//
+//	void deleteById(int id);
 
 	
 }

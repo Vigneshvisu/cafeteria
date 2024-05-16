@@ -4,13 +4,16 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
@@ -21,23 +24,60 @@ public class DeliveryMan {
 	generator="deliveryman_generator")
 	@SequenceGenerator(name="deliveryman_generator",
 	sequenceName="deliveryman_seq",allocationSize=1)
-	private int id;
+	private int dmid;
 	@Column
 	private String Name;
 	@Column
 	private String mobile;
-	@OneToMany(cascade = CascadeType.ALL)
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
-	private List<Address> address;
-	@Column
-	private int DeliveryFee;
+	private Address address;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orderstatus")
+	private OrderStatus orderstatus;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "userentity")
+	private UserEntity userentity;
+		
 
-	public int getId() {
-		return id;
+
+	public DeliveryMan(int dmid, String name, String mobile, Address address, OrderStatus orderstatus,
+			UserEntity userentity) {
+		super();
+		this.dmid = dmid;
+		Name = name;
+		this.mobile = mobile;
+		this.address = address;
+		this.orderstatus = orderstatus;
+		this.userentity = userentity;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public OrderStatus getOrderstatus() {
+		return orderstatus;
+	}
+
+	public void setOrderstatus(OrderStatus orderstatus) {
+		this.orderstatus = orderstatus;
+	}
+
+	public UserEntity getUserentity() {
+		return userentity;
+	}
+
+	public void setUserentity(UserEntity userentity) {
+		this.userentity = userentity;
+	}
+
+	
+	public int getDmid() {
+		return dmid;
+	}
+
+	public void setDmid(int dmid) {
+		this.dmid = dmid;
 	}
 
 	public String getName() {
@@ -55,31 +95,15 @@ public class DeliveryMan {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
-	public int getDeliveryFee() {
-		return DeliveryFee;
-	}
-
-	public void setDeliveryFee(int deliveryFee) {
-		DeliveryFee = deliveryFee;
-	}
-
-	public List<Address> getAddress() {
+	
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<Address> address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-	public DeliveryMan(int id, String name, String mobile, List<Address> address, int deliveryFee) {
-		super();
-		this.id = id;
-		Name = name;
-		this.mobile = mobile;
-		this.address = address;
-		DeliveryFee = deliveryFee;
-	}
+	
 
 	public DeliveryMan() {
 		super();

@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cafeteria.Exception.UserEntityNotFoundException;
-import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.UserEntity;
-import com.example.cafeteria.service.AddressService;
 import com.example.cafeteria.service.UserEntityService;
 
 @RestController
@@ -28,7 +26,7 @@ public class  UserEntityController  {
 	UserEntityService userentityservice;
 
 	@PostMapping
-	public ResponseEntity<UserEntity> createAddress(UserEntity userentity) {
+	public ResponseEntity<UserEntity> createAddress(@RequestBody UserEntity userentity) {
 		UserEntity user = userentityservice.createuserentity(userentity);
 		return new ResponseEntity<UserEntity>(user, HttpStatus.CREATED);
 	}

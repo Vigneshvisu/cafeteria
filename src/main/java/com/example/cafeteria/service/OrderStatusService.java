@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.cafeteria.Exception.OrderStatusNotFoundException;
+import com.example.cafeteria.Exception.UserEntityNotFoundException;
 import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.OrderStatus;
+import com.example.cafeteria.model.UserEntity;
 import com.example.cafeteria.repository.AddressRepository;
 import com.example.cafeteria.repository.OrderStatusRepository;
+import com.example.cafeteria.repository.UserEntityRepository;
 
 @Service
 public class OrderStatusService {
@@ -33,7 +36,7 @@ public class OrderStatusService {
 	}
 
 	public OrderStatus updateOrderStatus(OrderStatus orderstatus, int id) throws OrderStatusNotFoundException {
-		Optional<OrderStatus> order=orderstatusrepository.findById(orderstatus.getId());
+		Optional<OrderStatus> order=orderstatusrepository.findById(id);
 		if(order.isPresent()) {
 			OrderStatus ord=order.get();
 			if(orderstatus.getOrderingDate()!=null) {
@@ -64,6 +67,15 @@ public class OrderStatusService {
 		}else {
 			throw new OrderStatusNotFoundException("Given data is not found");
 
+		}
+	}
+	public OrderStatus viewOrder(Integer id) throws OrderStatusNotFoundException {
+		Optional<OrderStatus> opt = orderstatusrepository.findById(id);
+		if(opt.isPresent()) {
+			OrderStatus order = opt.get();
+			return order;
+		}else {
+			throw new OrderStatusNotFoundException("No Order found with ID: "+id);
 		}
 	}
 

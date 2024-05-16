@@ -6,48 +6,48 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.cafeteria.Exception.OrderStatusNotFoundException;
 import com.example.cafeteria.Exception.PaymentNotFoundException;
-import com.example.cafeteria.model.Category;
-import com.example.cafeteria.model.OrderStatus;
+import com.example.cafeteria.model.Account;
 import com.example.cafeteria.model.Payment;
-import com.example.cafeteria.repository.CategoryRepository;
-import com.example.cafeteria.repository.OrderStatusRepository;
+import com.example.cafeteria.repository.AccountRepository;
 import com.example.cafeteria.repository.PaymentRepository;
 @Service
 public class Paymentservice {
 	@Autowired
 	PaymentRepository paymentrepository;
+	Accountservice accountservice;
+	@Autowired
+	AccountRepository accountrepository;
 
 	public Payment payment(Payment payment) {
-		Payment Payment1=paymentrepository.save(payment);
-		return payment;
-	}
-
-
-	public Payment createpayment1(Payment payment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Payment updatePayment(Payment payment, int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void deletePayment(int id) {
-		// TODO Auto-generated method stub
-		
+		return payment;}
+	
+	
+	public Payment Paymentmode(Payment payment ) throws PaymentNotFoundException {
+        Account account = accountrepository.findByaccounttype(payment.getPaymentmode());
+        if (payment.getPaymentmode().equalsIgnoreCase("upi")) {
+        	payment.setPaymentmode(account.getAccounttype());
+            return paymentrepository.save(payment);
+        }else {
+        	throw new PaymentNotFoundException("given data is not found");
+        }
 	}
 	
+	
+//	public Payment savePayment(Payment payment) {
+//        return paymentrepository.save(payment);
+//    }
+//
+//    public List<Payment> getAllPayments() {
+//        return paymentrepository.findAll();
+//    }
 
 	public Payment createpayment(Payment payment) {
 		Payment ord=paymentrepository.save(payment);
-	
 		return ord;
 	}
 
-	public Payment getOrderStatusbyid(int id) throws PaymentNotFoundException {
+	public Payment getPaymentbyid(int id) throws PaymentNotFoundException {
 		Optional<Payment> ord=paymentrepository.findById(id);
 		if(ord.isPresent()) {
 			Payment ord1=ord.get();
@@ -57,23 +57,18 @@ public class Paymentservice {
 		}
 	}
 
-	public Payment updateOrderStatus(Payment payment, int id) throws PaymentNotFoundException {
-		Optional<Payment> order=paymentrepository.findById(payment.getId());
+	public Payment updatePayment(Payment payment, int id) throws PaymentNotFoundException {
+		Optional<Payment> order=paymentrepository.findById(id);
 		if(order.isPresent()) {
 			Payment ord=order.get();
 			if(payment.isAmountcredited()!=false) {
 				ord.setAmountcredited(payment.isAmountcredited());
 			}
+			if(payment.getPaymentmode()!=null) {
+				ord.setPaymentmode(payment.getPaymentmode());
+			}
 			if(payment.getCOD()!=null) {
 				ord.setCOD(payment.getCOD()); 
-			}
-			if(payment.getBankAccount()!=null)
-			{
-				ord.setBankAccount(payment.getBankAccount());
-			}
-			
-			if(payment.getUPI()!=null) {
-				ord.setUPI(payment.getUPI());
 			}
 			
 			if(payment.getDeliveryfee()!=null)
@@ -89,7 +84,7 @@ public class Paymentservice {
 		}
 	}
 
-	public void deleteOrderStatus(int id) throws PaymentNotFoundException {
+	public void deletePayment(int id) throws PaymentNotFoundException {
 		Optional<Payment>ord=paymentrepository.findById(id);
 		if(ord.isPresent()) {
 			paymentrepository.deleteById(id);
@@ -99,7 +94,7 @@ public class Paymentservice {
 		}
 	}
 
-	public List<Payment> getorderstatus() throws PaymentNotFoundException {
+	public List<Payment> getpayment() throws PaymentNotFoundException {
 		List<Payment>ord=paymentrepository.findAll();
 		if(ord.size()>0) {
 			return ord;
@@ -108,5 +103,6 @@ public class Paymentservice {
 		}
 		
 	}
+	
 		
 }

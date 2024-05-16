@@ -16,7 +16,7 @@ public class Categoryservice {
 	public Category createcategory(Category category) {
 		Category category1=categoryrepository.save(category);
 		
-		return category;
+		return category1;
 	}
 
 	public Category getCategorybyid(int id) throws CategoryNotFoundException {
@@ -30,7 +30,7 @@ public class Categoryservice {
 	}
 
 	public Category updateCategory(Category category, int id) throws CategoryNotFoundException {
-		Optional<Category> food=categoryrepository.findById(category.getFoodid());
+		Optional<Category> food=categoryrepository.findById(id);
 		if(food.isPresent()) {
 			Category food1=food.get();
 			if(category.getFoodname()!=null) {

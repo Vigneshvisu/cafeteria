@@ -32,7 +32,7 @@ public class UserEntityService {
 	}
 
 	public UserEntity updateUserEntity(UserEntity userentity, int id) throws UserEntityNotFoundException {
-		Optional<UserEntity>users=userentityrepository.findById(userentity.getId());
+		Optional<UserEntity>users=userentityrepository.findById(id);
 		if(users.isPresent()) {
 			UserEntity user=users.get();
 			if(userentity.getUsername()!=null) {
@@ -50,9 +50,6 @@ public class UserEntityService {
 			}
 			if(userentity.getAddress()!=null) {
 				user.setAddress(userentity.getAddress());
-			}
-			if(userentity.getFood()!=null) {
-				user.setFood(userentity.getFood());
 			}
 			
 			return userentityrepository.save(user);

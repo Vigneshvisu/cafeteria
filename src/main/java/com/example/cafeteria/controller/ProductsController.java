@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cafeteria.Exception.ProductsNotFoundException;
 import com.example.cafeteria.model.Products;
-import com.example.cafeteria.service.AddressService;
 import com.example.cafeteria.service.ProductsService;
 
 @RestController
@@ -25,7 +24,7 @@ public class ProductsController {
 	@Autowired
 	ProductsService productsservice;
 			@PostMapping
-			public ResponseEntity<Products> createProduct(Products product) {
+			public ResponseEntity<Products> createProduct(@RequestBody Products product) {
 				Products pro = productsservice.createproducts(product);
 				return new ResponseEntity<Products>(pro, HttpStatus.CREATED);
 			}

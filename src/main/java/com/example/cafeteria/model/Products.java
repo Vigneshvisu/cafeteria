@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
@@ -16,12 +17,11 @@ import jakarta.persistence.SequenceGenerator;
 @Entity
 public class Products {
 	@Id
-	@Column
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,
 	generator="products_generator")
 	@SequenceGenerator(name="products_generator",
 	sequenceName="products_seq",allocationSize=1)	
-	private int id;
+	private int productid;
 	@Column
 	private String name;
 	
@@ -29,10 +29,16 @@ public class Products {
 	@JoinColumn(name = "category")
 	private List<Category> category;
 	
-	public Products(int id, String name, List<Category> category) {
+	
+
+	public Products(int productid, String name, List<Category> category) {
 		super();
-		this.id = id;
+		this.productid = productid;
 		this.name = name;
+		this.category = category;
+	}
+
+	public void setCategory(List<Category> category) {
 		this.category = category;
 	}
 
@@ -49,23 +55,19 @@ public class Products {
 		this.name = name;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public int getProductid() {
+		return productid;
 	}
 
-	
+	public void setProductid(int productid) {
+		this.productid = productid;
+	}
 
 	public List<Category> getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<Category> category) {
-		this.category = category;
-	}
-
-	public int getId() {
-		return id;
-	}
+	
 	
 
 	

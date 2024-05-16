@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cafeteria.Exception.OrderStatusNotFoundException;
-import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.OrderStatus;
-import com.example.cafeteria.service.AddressService;
 import com.example.cafeteria.service.OrderStatusService;
 
 @RestController
@@ -27,7 +25,7 @@ public class OrderStatusController {
 	OrderStatusService orderstatusservice;
 
 	@PostMapping
-	public ResponseEntity<OrderStatus> createOrderStatus(OrderStatus orderstatus) {
+	public ResponseEntity<OrderStatus> createOrderStatus(@RequestBody OrderStatus orderstatus) {
 		OrderStatus ord = orderstatusservice.createorderstatus(orderstatus);
 		return new ResponseEntity<OrderStatus>(ord, HttpStatus.CREATED);
 	}

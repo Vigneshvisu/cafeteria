@@ -1,7 +1,6 @@
 package com.example.cafeteria.model;
 
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,48 +10,60 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
 public class Category {
 	@Id
-	@Column
-
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,
-	generator="category_generator")
-	@SequenceGenerator(name="category_generator",
-	sequenceName="category_seq",allocationSize=1)
-	private int foodid;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "category_generator")
+	@SequenceGenerator(name = "category_generator", sequenceName = "category_seq", allocationSize = 1)
+	private int categoryid;
 	private String foodname;
 	private String foodtitle;
 	private boolean foodready;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "products")
-	private List<Products> products;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address")
+	private Address address;
 
-	
-	public Category(int foodid, String foodname, String foodtitle, boolean foodready, List<UserEntity> userentity,
-			List<DeliveryMan> deliveryman) {
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "products")
+	private Products products;
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Category(int categoryid, String foodname, String foodtitle, boolean foodready, Address address, Products products) {
 		super();
-		this.foodid = foodid;
+		this.categoryid = categoryid;
 		this.foodname = foodname;
 		this.foodtitle = foodtitle;
 		this.foodready = foodready;
-		
+		this.address = address;
+		this.products = products;
 	}
 
-	public Category() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	public int getCategoryid() {
+		return categoryid;
 	}
 
-	public int getFoodid() {
-		return foodid;
+	public void setCategoryid(int categoryid) {
+		this.categoryid = categoryid;
 	}
 
-	public void setFoodid(int foodid) {
-		this.foodid = foodid;
+	public Products getProducts() {
+		return products;
+	}
+
+	public void setProducts(Products products) {
+		this.products = products;
 	}
 
 	public String getFoodname() {
@@ -72,10 +83,17 @@ public class Category {
 	}
 
 	public boolean isFoodready() {
+
 		return foodready;
 	}
 
 	public void setFoodready(boolean foodready) {
 		this.foodready = foodready;
 	}
+
+	public Category() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

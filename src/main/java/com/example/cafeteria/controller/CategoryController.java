@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cafeteria.Exception.AddressNotFoundException;
 import com.example.cafeteria.Exception.CategoryNotFoundException;
-import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.Category;
-import com.example.cafeteria.service.AddressService;
 import com.example.cafeteria.service.Categoryservice;
 @RestController
 @RequestMapping("/category")
@@ -28,7 +26,7 @@ public class CategoryController {
 	Categoryservice categoryservice;
 
 	@PostMapping
-	public ResponseEntity<Category> createCategory(Category category) {
+	public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 		Category categorys = categoryservice.createcategory(category);
 		return new ResponseEntity<Category>(categorys, HttpStatus.CREATED);
 	}

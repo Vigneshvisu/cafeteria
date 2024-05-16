@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cafeteria.Exception.DeliveryManServiceNotFoundException;
-import com.example.cafeteria.model.Address;
 import com.example.cafeteria.model.DeliveryMan;
-import com.example.cafeteria.service.AddressService;
 import com.example.cafeteria.service.DeliveryManService;
 
 
@@ -28,7 +26,7 @@ public class DeliveryManController {
 	DeliveryManService deliverymanservice;
 
 		@PostMapping
-		public ResponseEntity<DeliveryMan> createDeliveryMan(DeliveryMan deliveryman) {
+		public ResponseEntity<DeliveryMan> createDeliveryMan(@RequestBody DeliveryMan deliveryman) {
 			DeliveryMan deli = deliverymanservice.createdeliverymanService(deliveryman);
 			return new ResponseEntity<DeliveryMan>(deli, HttpStatus.CREATED);
 		}

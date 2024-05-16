@@ -32,7 +32,7 @@ public class AddressService {
 	}
 
 	public Address updateAddress(Address address, int id) throws AddressNotFoundException {
-		Optional<Address> adres=addressrepository.findById(address.getId());
+		Optional<Address> adres=addressrepository.findById(id);
 		if(adres.isPresent()) {
 			Address adre=adres.get();
 			if(address.getCity()!=null) {

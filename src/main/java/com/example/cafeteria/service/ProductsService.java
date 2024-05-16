@@ -34,7 +34,7 @@ public class ProductsService {
 	}
 
 	public Products updateProducts(Products products, int id) throws ProductsNotFoundException {
-		Optional<Products> produ=productsrepository.findById(products.getId());
+		Optional<Products> produ=productsrepository.findById(id);
 		if(produ.isPresent()) {
 			Products pro=produ.get();
 			if(products.getName()!=null) {
