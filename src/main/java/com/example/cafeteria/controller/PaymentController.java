@@ -42,8 +42,7 @@ public class PaymentController {
 	
 	@PostMapping("/payments")
 	public ResponseEntity<Payment> Paymentmode(@RequestBody Payment payment) throws PaymentNotFoundException {
-		System.out.println("mode of payment"+payment.getPaymentmode());
-		Payment payment1= paymentservice.Paymentmode(payment);
+		Payment payment1= paymentservice.Payments(payment);
 		return new ResponseEntity<Payment>(payment1, HttpStatus.CREATED);
 		
 	}

@@ -13,20 +13,20 @@ import com.example.cafeteria.repository.AccountRepository;
 @Service
 public class Accountservice {
 	@Autowired
-	AccountRepository accountrepository;
+	AccountRepository accrepository;
 
 	public Account account(Account account) {
-		Account account1=accountrepository.save(account);
+		Account account1=accrepository.save(account);
 		return account1;}
 	
 
 	public Account createAccount(Account account) {
-		Account ord=accountrepository.save(account);
+		Account ord=accrepository.save(account);
 		return ord;
 	}
 
 	public Account getAccountbyid(int id) throws PaymentNotFoundException {
-		Optional<Account> ord=accountrepository.findById(id);
+		Optional<Account> ord=accrepository.findById(id);
 		if(ord.isPresent()) {
 			Account ord1=ord.get();
 			return ord1;
@@ -37,7 +37,7 @@ public class Accountservice {
 	}
 
 	public Account updateAccount(Account account, int id) throws PaymentNotFoundException {
-		Optional<Account> order=accountrepository.findById(id);
+		Optional<Account> order=accrepository.findById(id);
 		if(order.isPresent()) {
 			Account ord=order.get();
 			
@@ -50,10 +50,10 @@ public class Accountservice {
 				ord.setUPI(account.getUPI());
 			}
 
-			if(ord.getAccounttype()!=null) {
-				ord.setAccounttype(account.getAccounttype());}
+			if(ord.getAccountType()!=null) {
+				ord.setAccountType(account.getAccountType());}
 			
-			return accountrepository.save(ord);
+			return accrepository.save(ord);
 		}
 		else {
 			throw new PaymentNotFoundException("Account data data is not found");
@@ -62,9 +62,9 @@ public class Accountservice {
 	}
 
 	public void deleteAccount(int id) throws PaymentNotFoundException {
-		Optional<Account>ord=accountrepository.findById(id);
+		Optional<Account>ord=accrepository.findById(id);
 		if(ord.isPresent()) {
-			accountrepository.deleteById(id);
+			accrepository.deleteById(id);
 		}else {
 			throw new PaymentNotFoundException("Given data is not found");
 
@@ -72,7 +72,7 @@ public class Accountservice {
 	}
 
 	public List<Account> getaccount() throws PaymentNotFoundException {
-		List<Account>ord=accountrepository.findAll();
+		List<Account>ord=accrepository.findAll();
 		if(ord.size()>0) {
 			return ord;
 		}else {

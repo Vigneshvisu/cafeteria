@@ -27,40 +27,19 @@ public class Payment {
     private boolean Amountcredited;
     @Column
     private String paymentmode;
+    
+    private String accounttype;
+    
+    @Column(name = "accountid",columnDefinition = "INTEGER DEFAULT 0")
+    private Integer accountId;
 
-    public Payment(int paymentid, String cOD, String deliveryfee, boolean amountcredited, String paymentmode,
-			UserEntity userentity, Account account) {
-		super();
-		this.paymentid = paymentid;
-		COD = cOD;
-		Deliveryfee = deliveryfee;
-		Amountcredited = amountcredited;
-		this.paymentmode = paymentmode;
-		this.userentity = userentity;
-		this.account = account;
-	}
-	public String getPaymentmode() {
-		return paymentmode;
-	}
-
-	public void setPaymentmode(String paymentmode) {
-		this.paymentmode = paymentmode;
-	}
-
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
-	}
-
-	@ManyToOne(cascade = CascadeType.ALL)
+   
+		@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity userentity;
 
-    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL)
-    private Account account;	
+//    @OneToOne(mappedBy = "payment", cascade = CascadeType.ALL)
+//    private Account account;	
     
      public Payment() {
 		super();
@@ -116,5 +95,48 @@ public class Payment {
 	public void setAmountcredited(boolean amountcredited) {
 		Amountcredited = amountcredited;
 	}
+	public Integer getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
+	}
+	public String getAccounttype() {
+		return accounttype;
+	}
+	public void setAccounttype(String accounttype) {
+		this.accounttype = accounttype;
+	}
+		public Payment(int paymentid, String cOD, String deliveryfee, boolean amountcredited, String paymentmode,
+			String accounttype, Integer accountId, UserEntity userentity, Account account) {
+		super();
+		this.paymentid = paymentid;
+		COD = cOD;
+		Deliveryfee = deliveryfee;
+		Amountcredited = amountcredited;
+		this.paymentmode = paymentmode;
+		this.accounttype = accounttype;
+		this.accountId = accountId;
+		this.userentity = userentity;
+//		this.account = account;
+	}
+		public String getPaymentmode() {
+		return paymentmode;
+	}
+
+	public void setPaymentmode(String paymentmode) {
+		this.paymentmode = paymentmode;
+	}
+
+//	public Account getAccount() {
+//		return account;
+//	}
+//
+//	public void setAccount(Account account) {
+//		this.account = account;
+//	}
+
+
+
 
 }

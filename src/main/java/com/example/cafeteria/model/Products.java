@@ -66,10 +66,4 @@ public class Products {
 	public List<Category> getCategory() {
 		return category;
 	}
-
-	
-	
-
-	
-
 }

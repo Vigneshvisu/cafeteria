@@ -23,16 +23,16 @@ public class Paymentservice {
 		return payment;}
 	
 	
-	public Payment Paymentmode(Payment payment ) throws PaymentNotFoundException {
-        Account account = accountrepository.findByaccounttype(payment.getPaymentmode());
-        if (payment.getPaymentmode().equalsIgnoreCase("upi")) {
-        	payment.setPaymentmode(account.getAccounttype());
-            return paymentrepository.save(payment);
-        }else {
-        	throw new PaymentNotFoundException("given data is not found");
-        }
-	}
-	
+//	public Payment Paymentmode(Payment payment ) throws PaymentNotFoundException {
+//        Account account = accountrepository.findByaccounttype(payment.getPaymentmode());
+//        if (payment.getPaymentmode().equalsIgnoreCase("upi")) {
+//        	payment.setPaymentmode(account.getAccountType());
+//            return paymentrepository.save(payment);
+//        }else {
+//        	throw new PaymentNotFoundException("given data is not found");
+//        }
+//	}
+//	
 	
 //	public Payment savePayment(Payment payment) {
 //        return paymentrepository.save(payment);
@@ -102,6 +102,19 @@ public class Paymentservice {
 			throw new PaymentNotFoundException("no data found ");
 		}
 		
+	}
+	public Payment Payments(Payment payment) throws PaymentNotFoundException {
+	   String ac = payment.getAccounttype(); 
+	    Account obj1 = accountrepository.findByAccountType(ac); 
+	    String var = obj1.getAccountType(); 
+
+	    if (ac != null && var != null && ac.equals(var)) { 
+	        payment.setAccountId(null); 
+	       Payment pay= paymentrepository.save(payment);
+	        return pay;
+	    } else {
+	       throw new PaymentNotFoundException("accoud data mis match");
+	    }
 	}
 	
 		

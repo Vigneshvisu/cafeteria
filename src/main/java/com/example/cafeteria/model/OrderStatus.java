@@ -53,7 +53,7 @@ public class OrderStatus {
 		this.orderid = orderid;
 		this.orderingDate = orderingDate;
 		OrderAssigned = orderAssigned;
-		OrderDispatched = orderDispatched;
+	 	OrderDispatched = orderDispatched;
 		OrderDelivered = orderDelivered;
 		this.userentity = userentity;
 		//this.payment = payment;

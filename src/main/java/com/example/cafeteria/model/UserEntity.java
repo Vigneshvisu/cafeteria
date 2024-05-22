@@ -83,7 +83,7 @@ public UserEntity(int userid, String username, String password, String mobileNum
 	MobileNumber = mobileNumber;
 	MailId = mailId;
 //	this.orderstatus = orderstatus;
-	this.address = address;
+	this.address = address; 
 //	this.deliveryman = deliveryman;
 	this.payment = payment;
 }

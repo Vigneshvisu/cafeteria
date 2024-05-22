@@ -1,5 +1,7 @@
 package com.example.cafeteria.model;
 
+import org.springframework.data.relational.core.mapping.Table;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,21 +26,14 @@ public class Account {
 
     @Column
     private String UPI;
-
-    @Column
-    private String accounttype;
-
-	public Account() {
-		// TODO Auto-generated constructor stub
+    @Column(name = "account_type")
+    private String accountType;
+	public int getId() {
+		return id;
 	}
 
-	public Account(Payment payment, int id, String accountnumber, String uPI, String accounttype) {
-		super();
-		this.payment = payment;
+	public void setId(int id) {
 		this.id = id;
-		Accountnumber = accountnumber;
-		UPI = uPI;
-		accounttype = accounttype;
 	}
 
 	public Payment getPayment() {
@@ -47,14 +42,6 @@ public class Account {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getAccountnumber() {
@@ -73,11 +60,28 @@ public class Account {
 		UPI = uPI;
 	}
 
-	public String getAccounttype() {
-		return accounttype;
+	public String getAccountType() {
+		return accountType;
 	}
 
-	public void setAccounttype(String accounttype) {
-		this.accounttype = accounttype;
-	}	
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public Account(int id, Payment payment, String accountnumber, String uPI, String accountType) {
+		super();
+		this.id = id;
+		this.payment = payment;
+		Accountnumber = accountnumber;
+		UPI = uPI;
+		this.accountType = accountType;
+	}
+
+	public Account() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	
 }
